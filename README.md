@@ -6,6 +6,8 @@
 ## 🚀 Características del Proyecto
 El ecosistema se divide en cuatro módulos principales interconectados:
 
+---
+
 ### 🏠 La Estancia
 
 Es el núcleo de la aplicación donde vive tu Tamagotchi.

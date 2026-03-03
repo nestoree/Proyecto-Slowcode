@@ -1,21 +1,36 @@
-let hunger = 0;
-let sleep = 0;
-// Cargar datos del almacenamiento local o empezar de cero
-let points = parseInt(localStorage.getItem('tamaPoints')) || 0;
+// --- 1. CARGA DE DATOS AL ABRIR LA WEB ---
+let hunger = parseInt(localStorage.getItem('tamaHunger')) || 0;
+let sleep = parseInt(localStorage.getItem('tamaSleep')) || 0;
+let points = parseInt(localStorage.getItem('tamaPoints')) || 2332;
 let foodCount = parseInt(localStorage.getItem('tamaFood')) || 0;
+let petName = localStorage.getItem('tamaName') || 'TAMA-CHAN';
 
+// Referencias a los elementos del HTML
+const hungerEl = document.getElementById('hunger');
+const sleepEl = document.getElementById('sleep');
+const msgEl = document.getElementById('status-msg');
+const foodStockEl = document.getElementById('food-stock');
+const pointsEl = document.getElementById('total-points');
+const nameEl = document.querySelector('.pet-name');
+
+// --- 2. FUNCIÓN PARA ACTUALIZAR TODO Y GUARDAR ---
 function updateUI() {
-    document.getElementById('hunger').innerText = hunger;
-    document.getElementById('sleep').innerText = sleep;
-    document.getElementById('total-points').innerText = points;
-    document.getElementById('food-stock').innerText = foodCount;
-    
-    // Guardar en el navegador
+    // Actualizamos lo que se ve en la pantalla
+    if (hungerEl) hungerEl.innerText = hunger;
+    if (sleepEl) sleepEl.innerText = sleep;
+    if (foodStockEl) foodStockEl.innerText = foodCount;
+    if (pointsEl) pointsEl.innerText = points;
+    if (nameEl) nameEl.innerText = petName;
+
+    // GUARDAMOS en el almacenamiento del navegador
+    localStorage.setItem('tamaHunger', hunger);
+    localStorage.setItem('tamaSleep', sleep);
     localStorage.setItem('tamaPoints', points);
     localStorage.setItem('tamaFood', foodCount);
+    
+    checkStatus();
 }
 
-// Comprar comida
 function buyFood() {
     if (points >= 10) {
         points -= 10;
@@ -27,40 +42,57 @@ function buyFood() {
     updateUI();
 }
 
+function checkStatus() {
+    const petImg = document.getElementById('pet-image');
+    if (hunger >= 100 || sleep >= 100) {
+        msgEl.innerText = "Tu mascota está muy débil... 💀";
+    } else if (hunger > 75) {
+        msgEl.innerText = "¡Tengo mucha hambre! 🍎";
+    } else {
+        msgEl.innerText = "¡Me siento genial! 😄";
+    }
+}
 
+// --- 3. PASO DEL TIEMPO ---
+// Cada 4 segundos suben las estadísticas y SE GUARDAN
+setInterval(() => {
+    if (hunger < 100) hunger += 2;
+    if (sleep < 100) sleep += 1;
+    updateUI(); 
+}, 3000);
 
+// --- 4. ACCIONES DE LOS BOTONES ---
 function feed() {
     if (foodCount > 0) {
         if (hunger > 0) {
-            hunger -= 25;
-            if (hunger < 0) hunger = 0;
-            foodCount -= 1;
-            document.getElementById('status-msg').innerText = "¡Qué rico!";
+            hunger = Math.max(0, hunger - 20);
+            foodCount--;
+            msgEl.innerText = "¡Mmm, pizza! 🍕";
         } else {
-            document.getElementById('status-msg').innerText = "No tengo hambre ahora.";
+            msgEl.innerText = "¡No me cabe más!";
         }
     } else {
-        document.getElementById('status-msg').innerText = "¡No hay comida! Ve al arcade.";
+        msgEl.innerText = "¡No hay comida! Ve al Arcade.";
     }
     updateUI();
 }
+
 let restCooldown = false;
 
 function rest() {
-    if (restCooldown) {
+        if (restCooldown) {
         document.getElementById('status-msg').innerText = "Espera 3 segundos";
         return;
+    }
+    
+    if (sleep > 0) {
+        sleep = Math.max(0, sleep - 30);
+        msgEl.innerText = "Zzz... ¡Qué sueño!";
     }
 
     restCooldown = true;
 
-    sleep = Math.max(0, sleep - 5);
-    document.getElementById('status-msg').innerText = "Zzz...";
     updateUI();
-
-    setTimeout(() => {
-        restCooldown = false;
-    }, 3000);
 }
 
 function toggleMenu() {
@@ -77,12 +109,5 @@ function toggleMenu() {
     }
 }
 
-// Ciclo natural
-setInterval(() => {
-    hunger = Math.min(100, hunger + 2);
-    sleep = Math.min(100, sleep + 1);
-    updateUI();
-}, 4000);
-
-// Al cargar la página por primera vez
+// Ejecutar al cargar por primera vez
 updateUI();

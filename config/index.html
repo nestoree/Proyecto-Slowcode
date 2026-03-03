@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #2c3e50;
+            font-family: 'Varela Round', sans-serif;
+        }
+        .config-card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-sizing: border-box;
+        }
+        .btn-save {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        .btn-reset {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            margin-top: 30px;
+            padding: 8px;
+            font-size: 0.8em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="config-card">
+        <h2>CONFIGURACIÓN ⚙️</h2>
+        
+        <label>Nombre de tu Mascota:</label>
+        <input type="text" id="nameInput" placeholder="Ej: Pipo">
+        <button class="btn-save" onclick="saveConfig()">GUARDAR CAMBIOS</button>
+
+        <hr style="margin: 25px 0;">
+        
+        <button class="btn-reset" onclick="resetGame()">⚠️ BORRAR TODOS LOS DATOS</button>
+        <br>
+        <a href="../index.html" style="display:block; margin-top:20px; color:#34495e;">Volver</a>
+    </div>
+
+    <script>
+        // Cargar nombre actual
+        document.getElementById('nameInput').value = localStorage.getItem('tamaName') || 'TAMAGOTCHI';
+
+        function saveConfig() {
+            const newName = document.getElementById('nameInput').value;
+            localStorage.setItem('tamaName', newName);
+            alert("¡Configuración guardada!");
+        }
+
+        function resetGame() {
+            if(confirm("¿Estás seguro? Perderás todos tus puntos, comida y progreso.")) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

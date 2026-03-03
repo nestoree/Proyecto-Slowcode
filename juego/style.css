@@ -1,0 +1,64 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Quita barras de scroll */
+    background-color: #000;
+}
+
+.game-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+#game-canvas {
+    display: block; /* Quita espacios extra */
+    background: linear-gradient(to bottom, #6ab0e5, #ffffff);
+}
+
+/* Pantalla de Game Over */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 10;
+}
+
+#game-over-screen.hidden {
+    display: none;
+}
+
+#game-over-screen h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    color: #ff3333;
+}
+
+#game-over-screen button {
+    background: #6a0dad;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#game-over-screen button:hover {
+    background: #7b1fa2;
+}
+
+.back-link {
+    color: #aaa;
+    text-decoration: none;
+}

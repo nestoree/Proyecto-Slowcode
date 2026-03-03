@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tama-Match</title>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff69b4;
+            --secondary: #ff4d4d;
+            --success: #2ecc71;
+            --bg-gradient: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
+        }
+
+        body {
+            font-family: 'Varela Round', sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Notificación de Match Flotante */
+        #match-notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid var(--primary);
+        }
+        #match-notification.show { top: 20px; }
+
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: white;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        /* Tarjetas */
+        .card-container {
+            position: relative;
+            width: 320px;
+            height: 420px;
+            margin-bottom: 120px;
+        }
+
+        .tinder-card {
+            background: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            box-sizing: border-box;
+            position: absolute;
+            transition: transform 0.5s ease, opacity 0.3s;
+        }
+
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto;
+            background: #fff0f5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 70px;
+            border: 5px solid var(--primary);
+        }
+
+        .info h2 { margin: 15px 0 5px; color: #333; }
+        .info p { color: #666; font-size: 0.9em; }
+
+        .actions {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: auto;
+        }
+
+        .btn-action {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .dislike { color: var(--secondary); border: 2px solid var(--secondary); }
+        .like { color: var(--success); border: 2px solid var(--success); }
+        .btn-action:active { transform: scale(0.8); }
+
+        /* Matches Drawer */
+        .matches-drawer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            height: 130px;
+            border-radius: 30px 30px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .matches-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            width: 100%;
+            padding: 15px 20px;
+        }
+
+        .match-bubble {
+            min-width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            border: 3px solid var(--primary);
+            position: relative;
+            animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .match-bubble::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: -18px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <div id="match-notification">
+        <span style="font-size: 30px;">❤️</span>
+        <div>
+            <strong style="color: var(--primary); display: block;">¡NUEVO MATCH!</strong>
+            <small id="match-name-toast">Nombre</small>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-home">🏠 VOLVER</a>
+
+    <div class="card-container">
+        <div class="tinder-card" id="card">
+            <div class="profile-pic" id="p-img">🐾</div>
+            <div class="info">
+                <h2 id="p-name">Buscando...</h2>
+                <p id="p-desc">Cargando perfiles...</p>
+            </div>
+            <div class="actions">
+                <button class="btn-action dislike" onclick="swipe('left')">✘</button>
+                <button class="btn-action like" onclick="swipe('right')">❤</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="matches-drawer">
+        <h3>Tus Matches ❤️</h3>
+        <div class="matches-list" id="matches-list">
+            <p id="no-matches" style="color: #ccc; font-size: 0.8em; margin-top: 15px;">Aún sin parejas...</p>
+        </div>
+    </div>
+
+    <script>
+        const profiles = [
+            { name: "Pipo", desc: "Fan de la pizza y las siestas.", img: "🦊" },
+            { name: "Luna", desc: "Busco pareja para el Arcade.", img: "🐱" },
+            { name: "Gerard", desc: "Experto en comer y repetir.", img: "🐼" },
+            { name: "Kiki", desc: "Amo saltar tuberías.", img: "🐥" },
+            { name: "Mochi", desc: "Soy un poco tímida.", img: "🐹" },
+            { name: "Rex", desc: "¡Rugidos y abrazos!", img: "🦖" },
+            { name: "Ali", desc: "Viajera espacial.", img: "👽" }
+        ];
+
+        let currentIndex = 0;
+        let myMatches = [];
+
+        function loadProfile() {
+            const p = profiles[currentIndex];
+            document.getElementById('p-name').innerText = p.name;
+            document.getElementById('p-desc').innerText = p.desc;
+            document.getElementById('p-img').innerText = p.img;
+            
+            const card = document.getElementById('card');
+            card.style.transition = 'none';
+            card.style.transform = 'translateX(0) rotate(0)';
+            card.style.opacity = '1';
+            setTimeout(() => card.style.transition = 'transform 0.5s ease, opacity 0.3s', 50);
+        }
+
+        function swipe(direction) {
+            const card = document.getElementById('card');
+            const profile = profiles[currentIndex];
+
+            if (direction === 'left') {
+                card.style.transform = 'translateX(-500px) rotate(-30deg)';
+                card.style.opacity = '0';
+            } else {
+                card.style.transform = 'translateX(500px) rotate(30deg)';
+                card.style.opacity = '0';
+                
+                // 50% de probabilidad de Match
+                if (Math.random() > 0.5) {
+                    handleMatch(profile);
+                }
+            }
+            
+            // Cargar siguiente inmediatamente después de la animación de salida
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % profiles.length;
+                loadProfile();
+            }, 300);
+        }
+
+        function handleMatch(profile) {
+            // Notificación visual rápida
+            const toast = document.getElementById('match-notification');
+            document.getElementById('match-name-toast').innerText = profile.name;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+
+            // Guardar si no está repetido
+            if (!myMatches.find(m => m.name === profile.name)) {
+                myMatches.push(profile);
+                
+                const list = document.getElementById('matches-list');
+                const noMatches = document.getElementById('no-matches');
+                if (noMatches) noMatches.remove();
+
+                const bubble = document.createElement('div');
+                bubble.className = 'match-bubble';
+                bubble.innerText = profile.img;
+                bubble.setAttribute('data-name', profile.name);
+                list.prepend(bubble);
+            }
+        }
+
+        loadProfile();
+    </script>
+</body>
+</html>

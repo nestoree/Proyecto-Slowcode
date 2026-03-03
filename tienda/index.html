@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Tamagotchi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .shop-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .shop-container {
+            background: white;
+            padding: 30px;
+            border-radius: 40px;
+            width: 380px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            border: 8px solid #ff69b4;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .shop-item {
+            background: #fff5f8;
+            border-radius: 20px;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .shop-item:hover {
+            border-color: #ff69b4;
+            transform: translateY(-5px);
+        }
+
+        .item-icon { font-size: 45px; display: block; margin-bottom: 10px; }
+        .price { color: #6a0dad; font-weight: bold; font-size: 1.1em; }
+
+        .buy-btn {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .buy-btn:active { transform: scale(0.95); }
+
+        .back-link {
+            text-decoration: none;
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="shop-wrapper">
+        <div class="currency-display">🪙 Tienes: <span id="shop-points">0</span> Puntos</div>
+        
+        <div class="shop-container">
+            <h1 style="color: #d02090; margin: 0;">TAMA-SHOP 🛍️</h1>
+            
+            <div class="item-grid">
+                <div class="shop-item">
+                    <span class="item-icon">🍎</span>
+                    <span class="price">10 pts</span>
+                    <button class="buy-btn" onclick="buyItem('apple', 10)">COMPRAR</button>
+                </div>
+                <div class="shop-item">
+                    <span class="item-icon">🍕</span>
+                    <span class="price">25 pts</span>
+                    <button class="buy-btn" onclick="buyItem('pizza', 25)">COMPRAR</button>
+                </div>
+                <div class="shop-item">
+                    <span class="item-icon">🍦</span>
+                    <span class="price">15 pts</span>
+                    <button class="buy-btn" onclick="buyItem('icecream', 15)">COMPRAR</button>
+                </div>
+                <div class="shop-item">
+                    <span class="item-icon">💊</span>
+                    <span class="price">40 pts</span>
+                    <button class="buy-btn" onclick="buyItem('medicine', 40)">CURAR</button>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-link">🏠 VOLVER A CASA</a>
+    </div>
+
+    <script>
+        let points = parseInt(localStorage.getItem('tamaPoints')) || 0;
+        let foodStock = parseInt(localStorage.getItem('tamaFood')) || 0;
+
+        function updateDisplay() {
+            document.getElementById('shop-points').innerText = points;
+            localStorage.setItem('tamaPoints', points);
+            localStorage.setItem('tamaFood', foodStock);
+        }
+
+        function buyItem(type, cost) {
+            if (points >= cost) {
+                points -= cost;
+                foodStock += (type === 'pizza' ? 3 : 1);
+                updateDisplay();
+            } else {
+                alert("No tienes puntos suficientes.");
+            }
+        }
+        updateDisplay();
+    </script>
+</body>
+</html>

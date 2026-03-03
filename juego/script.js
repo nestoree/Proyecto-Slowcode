@@ -18,7 +18,7 @@ let isGameOver = false;
 // Pájaro
 let birdX = 50;
 let birdY = canvas.height / 2;
-let birdSize = 50; 
+let birdSize = 95; 
 let birdVelocity = 0;
 let gravity = 0.1;
 let jump = -5;
@@ -162,4 +162,5 @@ canvas.addEventListener('mousedown', handleAction);
 canvas.addEventListener('touchstart', (e) => { e.preventDefault(); handleAction(); });
 
 resetVariables();
+
 gameLoop();

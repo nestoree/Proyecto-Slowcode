@@ -97,7 +97,7 @@ body {
 }
 
 #pet-image {
-    width: 80px; /* Ajusta esto según tu imagen original */
+    width: 300px; /* Ajusta esto según tu imagen original */
     /*animation: floating 2s ease-in-out infinite;*/
 }
 
@@ -300,4 +300,5 @@ body {
     height: 100%;
     background: rgba(0,0,0,0.7);
     z-index: 1500;
+
 }

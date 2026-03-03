@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagotchi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div class="currency-display">🪙 Puntos: <span id="total-points">0</span></div>
+
+        <div class="tamagotchi-case">
+            <div class="screen-frame">
+                <div class="screen">
+                    <div class="stats">
+                        <span>Hambre: <span id="hunger">0</span>%</span>
+                        <span>Sueño: <span id="sleep">0</span>%</span>
+                    </div>
+                    <div class="character-container">
+                        <img src="./img/image.png" alt="Tamagotchi" id="pet-image">
+                    </div>
+                    <div id="status-msg">¡Hola!</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button onclick="feed()">COMER (<span id="food-stock">0</span>)</button>
+                <button onclick="rest()">DORMIR</button>
+            </div>
+
+            <div class="shop-section">
+                <h3>TIENDA</h3>
+                <button onclick="buyFood()" class="buy-btn">Comprar Manzana (10 pts)</button>
+            </div>
+
+            <div class="arcade-section">
+                <a href="./juego/index.html" class="arcade-button">🎮 JUGAR</a>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menú</button>
+
+    <div id="side-menu" class="side-menu">
+        <button class="close-btn" onclick="toggleMenu()">×</button>
+        <h2>Navegación</h2>
+        <hr>
+        <a href="./index.html" class="menu-item">🏠 Volver al Tamagotchi</a>
+        <a href="./juego/index.html" class="menu-item">🎮 Ir al Arcade</a>
+        <a href="./tienda/index.html" class="menu-item">🛍️ Ir a la Tienda</a>
+        <a href="./citas/index.html" class="menu-item">💕 Citas</a>
+        <a href="./config/index.html" class="menu-item">⚙️ Configuración</a>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+</body>
+</html>

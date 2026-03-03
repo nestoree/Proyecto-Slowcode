@@ -1,11 +1,60 @@
 body {
+    margin: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
     font-family: 'Varela Round', sans-serif;
-    margin: 0;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+.repo-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: #24292e;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    transition: transform 0.2s, background 0.2s;
+    font-weight: bold;
+}
+
+.repo-link:hover {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.repo-link svg {
+    font-size: 1.2rem;
+}
+
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
 .main-container {
@@ -302,3 +351,4 @@ body {
     z-index: 1500;
 
 }
+

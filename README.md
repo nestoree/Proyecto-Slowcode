@@ -1,58 +1,61 @@
 # 🐾 Tamagotchi
-¡Bienvenido a Tamagotchi! Una experiencia web completa que combina el cuidado de mascotas clásicas de los 90 con un sistema de economía arcade, una tienda de artículos y una red social de citas para mascotas.
+¡Bienvenido a Tamagotchi Este proyecto incluye tres juegos arcade, una tienda funcional, una red social y persistencia de datos en tiempo real.
 
 ---
 
-## 🚀 Características del Proyecto
-El ecosistema se divide en cuatro módulos principales interconectados:
+## 🚀 Guía de Módulos del Proyecto
+El ecosistema se compone de los siguientes archivos y carpetas interconectados:
 
 ---
 
-### 🏠 La Estancia
+1. 🏠 Núcleo: La Estancia
 
-Es el núcleo de la aplicación donde vive tu Tamagotchi.
-- Gestión de Estados: Monitoriza el hambre y el sueño de tu mascota en tiempo real.
-- Ciclo de Vida: Si no alimentas o dejas descansar a tu mascota, su estado de salud empeorará.
-- Interacción: Botones para comer y dormir que consumen recursos de tu inventario.
-
----
-
-### 🎮 Arcade: Flappy Tama
-
-Un minijuego de habilidad integrado para ganar recursos.
-- Mecánica Flappy Bird: Esquiva las tuberías para puntuar.
-- Economía Real: Cada punto ganado en el juego se convierte automáticamente en Puntos en tu monedero global.
+Es el centro de mando. Aquí cuidas a tu mascota y gestionas sus necesidades básicas.
+- Persistencia Total: Gracias al uso de **LocalStorage**, el hambre, el sueño, los puntos y el inventario de comida no se reinician al cerrar el navegador o cambiar de juego.
+- Ciclo de Vida Activo: Las estadísticas suben automáticamente cada 3 segundos, obligándote a jugar para ganar comida.
+- UI Dinámica: Los estados de la mascota cambian visualmente (mensajes) según su salud.
 
 ---
 
-### 🛍️ Tama-Shop
+2. 🎮 Arcade: El Centro de Juegos
 
-El lugar para gastar tus puntos ganados con esfuerzo.
-- Inventario: Compra manzanas, pizzas o medicinas.
-- Sincronización: Los artículos comprados aparecen inmediatamente en tu almacén de la pantalla principal.
-- Precios Dinámicos: Diferentes objetos tienen diferentes costes y beneficios.
+Hemos implementado tres experiencias distintas para ganar Puntos Tama:
 
----
-
-### 💖 Tama-Match
-
-¡La primera red social de citas para Tamagotchis!
-- Sistema Swipe: Desliza a la derecha para dar "Like" o a la izquierda para pasar al siguiente perfil.
-- Matches en Tiempo Real: Notificaciones flotantes cuando encuentras una pareja compatible.
-- Lista de Matches: Un panel inferior para coleccionar todos tus flechazos.
+Juego 1: Flappy-Tama: Esquiva tuberías para ganar puntos rápidos.
+Juego 2: Tama-run: Mecánica: Salta obstáculos y agáchate (Flecha Abajo) para esquivar pájaros.
+- Dificultad Progresiva: A partir de los 7 puntos aparecen enemigos aéreos.
+Juego 3: Tama-invaders:
+- Combate: Destruye oleadas de aliens que disparan de forma inteligente.
+- Jefe Final: Cada 3 rondas aparece un Boss con 500 HP.
+- Sistema de Curación: Los aliens tienen un 15% de probabilidad de soltar corazones de vida para reparar tu nave.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+3. 💖 Tama-Match
 
-Este proyecto es una Single Page Application (SPA) conceptual construida con:
-- HTML5: Estructura semántica y uso de Canvas para el motor del juego.
-- CSS3: Animaciones personalizadas, diseño responsivo (Flexbox/Grid) y efectos de cristalografía.
-- JavaScript (Vanilla): Lógica de estados, motores de física de juegos.
-- LocalStorage: Sistema de persistencia de datos para guardar tus puntos, inventario y nombre de mascota sin necesidad de un servidor externo.
+Un sistema social de "Swipe" para buscar pareja a tu mascota.
+- Matches Infinitos: Notificaciones flotantes que no interrumpen la navegación.
+- Colección: Los matches se guardan visualmente en la parte inferior de la pantalla.
 
 ---
 
-## ⚙️ Configuración y Reinicio
+4. 🛍️ Tama-Shop
 
-Si deseas cambiar el nombre de tu mascota o borrar todo el progreso (puntos y comida), dirígete al apartado de Configuración desde el menú principal.
+Intercambia tus puntos ganados en el Arcade por suministros.
+- Sincronización: Las compras se reflejan instantáneamente en el inventario de la estancia principal.
+
+---
+
+5. 📝 Nota del Proyecto
+
+Una sección informativa sobre el desarrollo:
+- Compatibilidad: Aviso importante sobre la optimización exclusiva para PC.
+- Créditos: Desarrollado por Néstor, Edgar y Mario bajo el sello Slowcode.
+
+---
+
+🛠️ Especificaciones Técnicas
+- Lenguajes: HTML5, CSS3, JavaScript Vanilla (Sin librerías externas).
+- Gráficos: Sistema mixto de Pixel Art y Sprites dinámicos.
+- Almacenamiento: localStorage para guardar el estado de la partida entre sesiones.
+- Física de Juegos: Motores de colisión personalizados (AABB Collision Detection) para asegurar precisión en los saltos y disparos.

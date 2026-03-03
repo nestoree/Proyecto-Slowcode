@@ -8,7 +8,7 @@ El ecosistema se compone de los siguientes archivos y carpetas interconectados:
 
 ---
 
-1. 🏠 Núcleo: La Estancia
+## 1. 🏠 Núcleo: La Estancia
 
 Es el centro de mando. Aquí cuidas a tu mascota y gestionas sus necesidades básicas.
 - Persistencia Total: Gracias al uso de **LocalStorage**, el hambre, el sueño, los puntos y el inventario de comida no se reinician al cerrar el navegador o cambiar de juego.
@@ -17,7 +17,7 @@ Es el centro de mando. Aquí cuidas a tu mascota y gestionas sus necesidades bá
 
 ---
 
-2. 🎮 Arcade: El Centro de Juegos
+## 2. 🎮 Arcade: El Centro de Juegos
 
 Hemos implementado tres experiencias distintas para ganar Puntos Tama:
 
@@ -31,7 +31,7 @@ Juego 3: Tama-invaders:
 
 ---
 
-3. 💖 Tama-Match
+## 3. 💖 Tama-Match
 
 Un sistema social de "Swipe" para buscar pareja a tu mascota.
 - Matches Infinitos: Notificaciones flotantes que no interrumpen la navegación.
@@ -39,14 +39,14 @@ Un sistema social de "Swipe" para buscar pareja a tu mascota.
 
 ---
 
-4. 🛍️ Tama-Shop
+## 4. 🛍️ Tama-Shop
 
 Intercambia tus puntos ganados en el Arcade por suministros.
 - Sincronización: Las compras se reflejan instantáneamente en el inventario de la estancia principal.
 
 ---
 
-5. 📝 Nota del Proyecto
+## 5. 📝 Nota del Proyecto
 
 Una sección informativa sobre el desarrollo:
 - Compatibilidad: Aviso importante sobre la optimización exclusiva para PC.

@@ -121,7 +121,7 @@ function update() {
                 score += 5;
                 bossHealthBar.style.width = (boss.hp / boss.maxHp * 100) + "%";
                 if (boss.hp <= 0) {
-                    score += 500;
+                    score += 50;
                     currentRound++;
                     initRound();
                 }
@@ -133,7 +133,6 @@ function update() {
                     player.bullets.splice(i, 1);
                     score += 1;
 
-                    // PROBABILIDAD 45% DE SOLTAR VIDA
                     if (Math.random() < 0.10) {
                         lifePowerUps.push({
                             x: inv.x + inv.width / 2 - 12,
@@ -190,7 +189,7 @@ function update() {
         eb.y += eb.speed;
         if (eb.y > canvas.height) enemyBullets.splice(i, 1);
         if (eb.x > player.x && eb.x < player.x + player.width && eb.y > player.y && eb.y < player.y + player.height) {
-            player.hp -= 5;
+            player.hp -= 20;
             enemyBullets.splice(i, 1);
             playerHealthBar.style.width = Math.max(0, player.hp) + "%";
             if (player.hp <= 0) endGame();
@@ -263,4 +262,5 @@ function gameLoop() {
 }
 
 initRound();
+
 gameLoop();

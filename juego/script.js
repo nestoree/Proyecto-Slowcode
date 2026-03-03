@@ -43,8 +43,28 @@ function resetVariables() {
     birdVelocity = 0;
     pipes = [];
     pipeSpawnTimer = 0;
+    
+    // Inicializar unas cuantas nubes al azar
+    clouds = [];
+    for(let i = 0; i < 5; i++) {
+        let c = createCloud();
+        c.x = Math.random() * canvas.width; // Esparcirlas por toda la pantalla al inicio
+        clouds.push(c);
+    }
+    
     gameOverScreen.classList.add('hidden');
 }
+
+function drawCloud(x, y, size) {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.beginPath();
+    ctx.arc(x, y, size * 0.5, 0, Math.PI * 2);
+    ctx.arc(x + size * 0.35, y - size * 0.2, size * 0.4, 0, Math.PI * 2);
+    ctx.arc(x + size * 0.7, y, size * 0.35, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+
 
 function update() {
     if (isGameOver) return;
@@ -57,6 +77,16 @@ function update() {
     if (birdY + birdSize > canvas.height || birdY < 0) {
         endGame();
     }
+
+    if (isGameOver) return;
+
+    // Mover nubes (siempre se mueven, incluso si el pájaro no salta)
+    clouds.forEach(c => {
+        c.x -= c.speed;
+        if (c.x + c.size < 0) {
+            Object.assign(c, createCloud());
+        }
+    });
 
     // Generar tuberías
     if (pipeSpawnTimer <= 0) {
@@ -94,10 +124,25 @@ function update() {
     }
 }
 
+let clouds = [];
+const cloudSpeedBase = 0.5; // Velocidad de las nubes (más lento que las tuberías)
+
+function createCloud() {
+    return {
+        x: canvas.width + Math.random() * 200,
+        y: Math.random() * (canvas.height / 2), // Solo en la mitad superior
+        size: 50 + Math.random() * 50,
+        speed: cloudSpeedBase + Math.random() * 0.5
+    };
+}
+
 function draw() {
-    // 1. Limpiar fondo con color sólido (Cielo)
+    // 1. Limpiar fondo
     ctx.fillStyle = '#6ab0e5';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 1.5 DIBUJAR NUBES (Detrás de todo)
+    clouds.forEach(c => drawCloud(c.x, c.y, c.size));
 
     // 2. Dibujar Tuberías
     ctx.fillStyle = '#2ecc71'; // Verde llamativo
@@ -162,5 +207,4 @@ canvas.addEventListener('mousedown', handleAction);
 canvas.addEventListener('touchstart', (e) => { e.preventDefault(); handleAction(); });
 
 resetVariables();
-
 gameLoop();

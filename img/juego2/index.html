@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Tama Run - Fullscreen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="score-board">Puntos: <span id="score">0</span></div>
+    
+    <canvas id="dino-canvas"></canvas>
+    
+    <div id="game-over" class="hidden">
+        <h1>¡GAME OVER!</h1>
+        <p>Puntos ganados: <span id="final-points">0</span></p>
+        <button onclick="resetGame()">REINTENTAR</button>
+        <a href="../index.html" class="exit-btn">VOLVER</a>
+    </div>
+
+    <div class="instructions">
+        ↑ / ESPACIO: Saltar | ↓: Agacharse
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
